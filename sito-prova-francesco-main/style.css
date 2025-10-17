@@ -290,6 +290,41 @@ section, .galleria-pizze { content-visibility: auto; contain-intrinsic-size: aut
 .ig-icon { display: inline-block; flex: 0 0 auto; color: currentColor; }
 .safe-area-bottom { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
 
+/* Stile per i link contatti con icone */
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #f2f3f4;
+  text-decoration: none;
+  min-height: 44px; /* Touch-friendly */
+  padding: 4px 0;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover,
+.contact-link:focus {
+  color: var(--colore-accento);
+  text-decoration: none;
+}
+
+.contact-icon {
+  flex-shrink: 0; /* Previene il rimpicciolimento dell'icona */
+  color: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.contact-link:hover .contact-icon {
+  transform: scale(1.1); /* Leggero zoom al hover */
+}
+
+/* Assicura che tutte le icone del footer siano allineate */
+.social-link,
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
 
 .approfondisci {
   display: inline-flex;
