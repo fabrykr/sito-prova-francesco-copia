@@ -1,0 +1,449 @@
+/* Inserisci questo blocco in cima al tuo file style.css */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --colore-primario: #c00;
+  --colore-accento: #d4af37;
+  --colore-testo: #222;
+  --colore-sfondo: #fff;
+  --altezza-header-desktop: 260px;
+  --altezza-header-mobile: 130px; /* Altezza dedicata per mobile */
+  --font-principale: 'Montserrat', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--altezza-header-desktop); /* Per ancoraggio desktop */
+}
+
+body {
+  font-family: var(--font-principale);
+  margin: 0;
+  background: var(--colore-sfondo);
+  color: var(--colore-testo);
+  padding-top: var(--altezza-header-desktop); /* Default per desktop */
+  overflow-x: hidden;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main#content { flex: 1 0 auto; }
+#footer { margin-top: auto; width: 100%; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  height: 100lvh;
+  background-image: url('https://i.ibb.co/n8wKLf9t/Generated-Image-October-15-2025-5-58-PM.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.11;
+  z-index: -1;
+}
+
+/* Stili base (Desktop) */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--altezza-header-desktop);
+  background-color: var(--colore-primario);
+  display: flex;
+  align-items: center;
+  padding: 0 4%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+.header-content { width: 100%; position: relative; }
+h1 {
+  color: white;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.sottotitolo {
+  color: var(--colore-accento);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* Sostituisci la vecchia regola .foto-wrapper con questa */
+.foto-wrapper {
+  position: relative; /* Posizionamento normale, non più fisso o assoluto */
+  width: 180px;
+  height: 180px;
+  margin: 40px auto; /* 40px di spazio sopra/sotto, e centrato orizzontalmente */
+  z-index: 10; /* Un valore basso, serve solo per sicurezza */
+}
+
+.foto-personale {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+/* ================================== */
+/* STILE SIDEBAR MIGLIORATO           */
+/* ================================== */
+
+#sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 280px; /* Un po' più larga per dare respiro */
+  background: #fdfdfd; /* Un bianco leggermente "caldo", meno sterile */
+  box-shadow: -4px 0 20px rgba(0,0,0,.15);
+  padding: 25px;
+  padding-right: calc(25px + env(safe-area-inset-right, 0px));
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(.2, .9, .3, 1); /* Transizione più fluida */
+  z-index: 2000;
+}
+
+#sidebar.open {
+  transform: translateX(0);
+}
+
+/* Stile per il titolo che abbiamo aggiunto */
+#sidebar h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--colore-accento); /* Usa il colore accento */
+  margin: 0 0 20px 10px; /* Spaziatura sotto e un piccolo rientro */
+  opacity: 0.9;
+}
+
+/* Pulizia della lista */
+#sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Stile per ogni singolo link */
+#sidebar li a {
+  display: block; /* Occupa tutto lo spazio per essere più cliccabile */
+  padding: 14px 20px;
+  text-decoration: none;
+  font-weight: 600; /* Testo più deciso */
+  color: var(--colore-testo);
+  border-radius: 8px; /* Angoli smussati come nel resto del sito */
+  transition: background-color 0.2s ease, color 0.2s ease;
+  will-change: background-color, color;
+}
+
+/* Effetto al passaggio del mouse o quando si seleziona con la tastiera */
+#sidebar li a:hover,
+#sidebar li a:focus {
+  background-color: #f0f0f0; /* Sfondo grigio chiaro per feedback */
+  color: var(--colore-primario); /* Il testo diventa rosso */
+  outline: none;
+}
+
+/* (Opzionale) Stile per il link della pagina attiva, da gestire via JS */
+#sidebar li a.active {
+  background-color: var(--colore-primario);
+  color: white;
+  font-weight: 700;
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1500;
+}
+.nav-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Ripristina la regola corretta per l'hamburger da desktop */
+.hamburger {
+  position: fixed;
+  top: calc(var(--altezza-header-desktop) + 12px);
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  background: #fff;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  z-index: 2100;
+}
+
+.hamburger-box {
+  width: 24px;
+  height: 18px;
+  position: relative;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 100%;
+  height: 3px;
+  background-color: var(--colore-primario);
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  transition: transform 0.25s ease-in-out;
+}
+.hamburger-inner {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.hamburger-inner::before { content: ''; top: -7px; }
+.hamburger-inner::after { content: ''; bottom: -7px; }
+.hamburger[aria-expanded="true"] .hamburger-inner { transform: rotate(45deg); }
+.hamburger[aria-expanded="true"] .hamburger-inner::before { top: 0; transform: rotate(-90deg); }
+.hamburger[aria-expanded="true"] .hamburger-inner::after { bottom: 0; transform: rotate(-90deg); }
+
+main { max-width: 1000px; margin: 50px auto; padding: 0 8%; }
+/* ... (tutto il resto del CSS generale fino alle media query) ... */
+:where(h1,h2,h3,h4,h5,h6) { margin:0; }
+:where(ul,ol) { margin:0; padding-inline-start:1.2em; }
+p, li, a, .nome-pizza { overflow-wrap: anywhere; hyphens: auto; }
+section { margin-bottom: 60px; padding-bottom: 18px; }
+h2 { color: var(--colore-accento); font-size: clamp(1.25rem, 3vw, 2rem); margin-bottom: 24px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+section::after { content: ''; display: block; width: 80px; height: 5px; background: linear-gradient(90deg, var(--colore-primario) 60%, var(--colore-accento) 100%); margin-top: 12px; border-radius: 3px; box-shadow: 0 0 6px #d4af37a0; transition: width 0.4s ease; }
+section:hover::after { width: 110px; }
+.locali-layout { display: flex; align-items: center; justify-content: space-between; gap: 36px; flex-wrap: wrap; }
+.locali-testo { flex: 1; min-width: 220px; }
+.locali-foto-container { flex: 0 0 auto; }
+.mappa-locali { width: 400px; max-width: 100%; opacity: .8; transition: transform 220ms ease; }
+.mappa-locali:hover { transform: scale(1.05); }
+.galleria-pizze { position: relative; max-width: 650px; margin: 50px auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
+.carousel { display: flex; transition: transform 0.5s ease-in-out; will-change: transform; }
+.slide { min-width: 100%; box-sizing: border-box; }
+.slide img { width: 100%; display: block; object-fit: cover; max-height: 450px; border-radius: 6px; }
+.nome-pizza { padding: 12px 0; font-size: 1.2rem; font-weight: 500; color: #b3331d; text-align: center; }
+button.prev, button.next { background: none; border: none; color: var(--colore-primario); font-size: 2rem; position: absolute; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
+@media (pointer: coarse) { button.prev, button.next { min-width: 48px; min-height: 48px; padding: 8px; } }
+button.prev { left: 12px; }
+button.next { right: 12px; }
+button.prev:hover, button.next:hover { color: #fff; }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: transform, opacity; }
+.reveal.in-view { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .reveal { transition: none; opacity: 1; transform: none; } }
+.mappa-locali.reveal.in-view:hover { transform: translateY(0) scale(1.05); }
+section, .galleria-pizze { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+.foto-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.35s ease; z-index: 3000; min-height: 100svh; }
+.foto-overlay.active { opacity: 1; pointer-events: all; }
+.close-overlay { position: absolute; top: calc(22px + env(safe-area-inset-top)); right: calc(22px + env(safe-area-inset-right)); background: transparent; color: #fff; border: none; font-size: 1.4rem; cursor: pointer; z-index: 3010; padding: 8px; border-radius: 8px; transition: background 0.15s ease; }
+.close-overlay:hover { background: rgba(255,255,255,0.06); }
+.close-overlay:focus { outline: 3px solid #d4af37; }
+.foto-grande { max-width: 92vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); transform: scale(0.8); opacity: 0; transition: transform 0.35s cubic-bezier(.2,.9,.3,1), opacity 0.35s ease; }
+.foto-overlay.active .foto-grande { transform: scale(1); opacity: 1; }
+.site-footer { background: #111318; color: #f2f3f4; padding: 28px 0; border-top: none; }
+.site-footer a { color: #f2f3f4; text-decoration: none; }
+.site-footer a:hover, .site-footer a:focus { color: var(--colore-accento); text-decoration: underline; outline: none; }
+.footer-inner { max-width: 1000px; margin: 0 auto; padding: 0 8%; display: grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap: 18px 32px; }
+.footer-title { font-weight: 700; letter-spacing: .5px; margin-bottom: 8px; text-transform: uppercase; opacity: .9; }
+.social-link { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 0; }
+.ig-icon { display: inline-block; flex: 0 0 auto; color: currentColor; }
+.safe-area-bottom { padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
+
+
+.approfondisci {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  margin-top: 16px;
+  background: transparent;
+  color: var(--colore-primario);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  border: 2px solid var(--colore-accento);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Effetto riempimento dal basso */
+.approfondisci::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  background: var(--colore-accento);
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+}
+
+.approfondisci:hover {
+  color: var(--colore-testo);
+  border-color: var(--colore-accento);
+}
+
+.approfondisci:hover::before {
+  height: 100%;
+}
+/* FILE: style.css */
+
+/* ============================================= */
+/* OTTIMIZZAZIONE MOBILE FINALE (< 1000px) */
+/* ============================================= */
+@media (max-width: 999px) {
+
+  html {
+    scroll-padding-top: var(--altezza-header-mobile); /* Mantieni invece di azzerare */
+  }
+
+  body {
+    padding-top: var(--altezza-header-mobile); /* Questa è corretta */
+    /* AGGIUNGI: */
+    min-height: 100vh;
+    min-height: 100svh; /* Supporto per Safari mobile */
+  }
+  
+  main {
+    margin-top: 0;
+    padding: 20px 6% 40px; /* AGGIUNGI padding verticale esplicito */
+    width: 100%; /* AGGIUNGI */
+    max-width: 100%; /* AGGIUNGI */
+    box-sizing: border-box; /* AGGIUNGI */
+  }
+
+  /* 1. HEADER MOBILE: Non più fisso, diventa parte del body */
+  header {
+    position: fixed; /* Mantieni fisso */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--altezza-header-mobile);
+    align-items: center;
+    justify-content: center; /* AGGIUNGI */
+    text-align: center;
+    padding: calc(env(safe-area-inset-top, 0px) + 12px) 6% 12px 6%; /* MODIFICA */
+    box-sizing: border-box;
+    width: 100%; /* AGGIUNGI */
+  }
+  
+  .header-content {
+    /* Assicuriamoci che non abbia posizionamenti strani */
+    position: static;
+    width: 100%;
+  }
+
+  section:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  #storia {
+    padding-top: 0; /* Rimuovi padding extra sulla prima sezione */
+  }
+
+  
+  h1 { font-size: 1.8rem; }
+  .sottotitolo { font-size: 1rem; margin-top: 2px; }
+
+  /* 2. FOTO PERSONALE MOBILE: Diventa un blocco normale dentro l'header */
+  .foto-wrapper {
+    width: 120px;  /* Riduci leggermente */
+    height: 120px;
+    margin: 20px auto 24px; /* Riduci margini verticali */
+    display: block; /* AGGIUNGI questa riga */
+    clear: both; /* AGGIUNGI questa riga */
+  }
+
+  .foto-personale {
+    cursor: pointer; /* Riattiviamo il cursore a puntatore */
+  }
+
+  /* 3. HAMBURGER MOBILE: Ancora fisso, ma con posizione corretta */
+  .hamburger {
+    /* Posizioniamo l'hamburger correttamente sotto l'header mobile */
+    top: calc(var(--altezza-header-mobile) + 12px);
+    right: 12px;
+  }
+  
+  /* 4. Adattamenti finali */
+  #sidebar {
+    padding-top: 20px; /* Padding standard */
+  }
+  .locali-layout, .footer-inner {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .galleria-pizze, .slide { max-width: 100%; }
+  .slide { aspect-ratio: 4/3; }
+  .slide img { height: 100%; max-height: none; }
+
+  /* Aggiungi questa sezione alla fine, prima della chiusura della media query */
+  .approfondisci {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    margin-top: 16px;
+    background: transparent;
+    color: var(--colore-primario);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--colore-accento);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    min-height: 48px;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .approfondisci::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: var(--colore-accento);
+    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: -1;
+  }
+
+  /* Touch feedback per mobile (al tocco, non hover) */
+  .approfondisci:active {
+    transform: scale(0.98);
+  }
+
+  .approfondisci:active::before {
+    height: 100%;
+  }
+}
+
